@@ -1,25 +1,44 @@
+"use client";
 import Link from 'next/link';
+import { useState } from 'react';
 
 const Navbar = () => {
   const isLoggedIn = false; // Mock state for now
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="navbar bg-base-100 shadow-sm sticky top-0 z-50">
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-            </svg>
-          </div>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/products">Products</Link></li>
-            {isLoggedIn && <li><Link href="/my-profile">My Profile</Link></li>}
-          </ul>
+        <div className="lg:hidden relative">
+          <button 
+            role="button" 
+            className="btn btn-ghost"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+              </svg>
+            )}
+          </button>
+          
+          {isMobileMenuOpen && (
+            <div className="absolute left-2 top-14 mt-2 z-50 p-2 shadow-xl bg-base-100 rounded-box w-52 border border-base-200">
+              <ul className="menu menu-sm w-full">
+                <li><Link href="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
+                <li><Link href="/products" onClick={() => setIsMobileMenuOpen(false)}>Products</Link></li>
+                {isLoggedIn && <li><Link href="/my-profile" onClick={() => setIsMobileMenuOpen(false)}>My Profile</Link></li>}
+              </ul>
+            </div>
+          )}
         </div>
-        <Link href="/" className="btn btn-ghost text-xl font-bold">SunCart</Link>
+        <Link href="/" className="btn btn-ghost text-xl font-bold ml-2 lg:ml-0">SunCart</Link>
       </div>
+      
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li><Link href="/">Home</Link></li>
@@ -27,6 +46,7 @@ const Navbar = () => {
           {isLoggedIn && <li><Link href="/my-profile">My Profile</Link></li>}
         </ul>
       </div>
+      
       <div className="navbar-end gap-2">
         {isLoggedIn ? (
           <div className="dropdown dropdown-end">
@@ -42,7 +62,7 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <Link href="/login" className="btn btn-ghost">Login</Link>
+            <Link href="/login" className="btn btn-ghost hidden sm:inline-flex">Login</Link>
             <Link href="/register" className="btn btn-primary">Register</Link>
           </>
         )}
