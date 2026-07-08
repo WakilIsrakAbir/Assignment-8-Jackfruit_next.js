@@ -1,10 +1,24 @@
 "use client";
 import Link from 'next/link';
 import { useState } from 'react';
+import { useSession, signOut } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
-  const isLoggedIn = false; // Mock state for now
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
+  const isLoggedIn = !!session;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+        },
+      },
+    });
+  };
 
   return (
     <div className="navbar bg-base-100 shadow-sm sticky top-0 z-50">
@@ -48,16 +62,23 @@ const Navbar = () => {
       </div>
       
       <div className="navbar-end gap-2">
-        {isLoggedIn ? (
+        {isPending ? (
+          <span className="loading loading-spinner loading-sm"></span>
+        ) : isLoggedIn ? (
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img alt="User Avatar" src="https://ui-avatars.com/api/?name=User" />
+                <img alt="User Avatar" src={session?.user?.image || `https://ui-avatars.com/api/?name=${session?.user?.name || 'User'}`} />
               </div>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li className="menu-title px-4 py-2">
+                <span className="font-bold block truncate">{session?.user?.name}</span>
+                <span className="text-xs opacity-70 block truncate">{session?.user?.email}</span>
+              </li>
+              <div className="divider my-0"></div>
               <li><Link href="/my-profile">Profile</Link></li>
-              <li><button>Logout</button></li>
+              <li><button onClick={handleLogout} className="text-error font-bold">Logout</button></li>
             </ul>
           </div>
         ) : (
