@@ -1,4 +1,9 @@
+import productsData from "@/data/products.json";
+import ProductCard from "@/components/ui/ProductCard";
+
 const Home = () => {
+  const popularProducts = productsData.slice(0, 3);
+
   return (
     <div className="min-h-screen bg-base-100">
       {/* Hero Section */}
@@ -13,8 +18,10 @@ const Home = () => {
       {/* Popular Products Section */}
       <section className="py-16 px-4 container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-10">Popular Products</h2>
-        <div className="text-center text-base-content/70">
-          Product cards will be displayed here.
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {popularProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </section>
 
