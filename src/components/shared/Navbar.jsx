@@ -2,10 +2,11 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSession, signOut } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session, isPending } = useSession();
   const isLoggedIn = !!session;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,6 +19,11 @@ const Navbar = () => {
         },
       },
     });
+  };
+
+  const isActive = (path) => {
+    if (path === '/') return pathname === '/';
+    return pathname === path || pathname.startsWith(`${path}/`);
   };
 
   return (
@@ -43,9 +49,9 @@ const Navbar = () => {
           {isMobileMenuOpen && (
             <div className="absolute left-2 top-14 mt-2 z-50 p-2 shadow-xl bg-base-100 rounded-box w-52 border border-base-200">
               <ul className="menu menu-sm w-full">
-                <li><Link href="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
-                <li><Link href="/products" onClick={() => setIsMobileMenuOpen(false)}>Products</Link></li>
-                {isLoggedIn && <li><Link href="/my-profile" onClick={() => setIsMobileMenuOpen(false)}>My Profile</Link></li>}
+                <li><Link href="/" className={isActive('/') ? 'text-primary font-bold bg-base-200' : ''} onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
+                <li><Link href="/products" className={isActive('/products') ? 'text-primary font-bold bg-base-200' : ''} onClick={() => setIsMobileMenuOpen(false)}>Products</Link></li>
+                {isLoggedIn && <li><Link href="/my-profile" className={isActive('/my-profile') ? 'text-primary font-bold bg-base-200' : ''} onClick={() => setIsMobileMenuOpen(false)}>My Profile</Link></li>}
               </ul>
             </div>
           )}
@@ -55,9 +61,9 @@ const Navbar = () => {
       
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/products">Products</Link></li>
-          {isLoggedIn && <li><Link href="/my-profile">My Profile</Link></li>}
+          <li><Link href="/" className={isActive('/') ? 'text-primary font-bold bg-base-200' : ''}>Home</Link></li>
+          <li><Link href="/products" className={isActive('/products') ? 'text-primary font-bold bg-base-200' : ''}>Products</Link></li>
+          {isLoggedIn && <li><Link href="/my-profile" className={isActive('/my-profile') ? 'text-primary font-bold bg-base-200' : ''}>My Profile</Link></li>}
         </ul>
       </div>
       
@@ -77,7 +83,7 @@ const Navbar = () => {
                 <span className="text-xs opacity-70 block truncate">{session?.user?.email}</span>
               </li>
               <div className="divider my-0"></div>
-              <li><Link href="/my-profile">Profile</Link></li>
+              <li><Link href="/my-profile" className={isActive('/my-profile') ? 'active' : ''}>Profile</Link></li>
               <li><button onClick={handleLogout} className="text-error font-bold">Logout</button></li>
             </ul>
           </div>

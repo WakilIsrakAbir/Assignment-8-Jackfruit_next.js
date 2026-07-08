@@ -1,5 +1,6 @@
 import productsData from "@/data/products.json";
 import ProductCard from "@/components/ui/ProductCard";
+import Link from "next/link";
 
 export const metadata = {
   title: 'Home',
@@ -15,7 +16,7 @@ const Home = () => {
         <div className="container mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6">Summer Sale 50% OFF</h1>
           <p className="text-xl mb-8">Hot Deals 🔥 on all summer essentials. Do not miss out!</p>
-          <button className="btn btn-secondary btn-lg">Shop Now</button>
+          <Link href="/products" className="btn btn-secondary btn-lg">Shop Now</Link>
         </div>
       </section>
 
