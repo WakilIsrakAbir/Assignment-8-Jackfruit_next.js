@@ -1,6 +1,20 @@
 import productsData from "@/data/products.json";
 import Link from 'next/link';
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const product = productsData.find(p => p.id.toString() === id);
+  
+  if (!product) {
+    return { title: 'Product Not Found' };
+  }
+  
+  return {
+    title: product.name,
+    description: product.description,
+  };
+}
+
 const ProductDetailsPage = async ({ params }) => {
   const { id } = await params;
   const product = productsData.find(p => p.id.toString() === id);

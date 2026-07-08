@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'My Profile',
+  description: 'Manage your SunCart account details.',
+};
+
 const MyProfilePage = () => {
   return (
     <div className="container mx-auto px-4 py-8">

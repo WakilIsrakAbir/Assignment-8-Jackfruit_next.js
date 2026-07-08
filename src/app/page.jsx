@@ -1,6 +1,10 @@
 import productsData from "@/data/products.json";
 import ProductCard from "@/components/ui/ProductCard";
 
+export const metadata = {
+  title: 'Home',
+};
+
 const Home = () => {
   const popularProducts = productsData.slice(0, 3);
 

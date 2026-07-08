@@ -1,6 +1,11 @@
 import productsData from "@/data/products.json";
 import ProductCard from "@/components/ui/ProductCard";
 
+export const metadata = {
+  title: 'Products',
+  description: 'Browse our collection of summer essentials.',
+};
+
 const ProductsPage = () => {
   return (
     <div className="container mx-auto px-4 py-12">

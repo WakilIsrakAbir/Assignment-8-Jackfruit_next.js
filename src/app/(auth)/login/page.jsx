@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Login',
+  description: 'Log in to your SunCart account to access your profile and faster checkout.',
+};
+
 const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">

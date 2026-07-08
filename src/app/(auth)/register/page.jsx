@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Register',
+  description: 'Create a new SunCart account to enjoy personalized summer deals.',
+};
+
 const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
