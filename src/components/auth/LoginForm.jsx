@@ -71,7 +71,7 @@ export default function LoginForm() {
       </button>
 
       <p className="text-center mt-6 text-sm">
-        Don't have an account? <Link href="/register" className="link link-primary font-bold">Register</Link>
+        Do not have an account? <Link href="/register" className="link link-primary font-bold">Register</Link>
       </p>
     </div>
   );
