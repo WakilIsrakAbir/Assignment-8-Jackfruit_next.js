@@ -1,2 +1,20 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.hero-gradient {
+  background: linear-gradient(-45deg, #FF6B6B, #4ECDC4, #45B7D1, #FFBE0B);
+  background-size: 400% 400%;
+  animation: gradient 12s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

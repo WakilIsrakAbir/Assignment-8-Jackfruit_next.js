@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="card w-full bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+    <div className="card w-full bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 animate__animated animate__fadeInUp animate__faster">
       <figure className="h-64 overflow-hidden">
         <img
           src={product.image}
