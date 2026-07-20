@@ -15,13 +15,20 @@ if (process.env.NODE_ENV === "development") {
 const db = client.db();
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db, {
-    client,
-  }),
+  baseURL: process.env.NEXT_PUBLIC_APP_URL || process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  logger: { level: "debug" },
+  database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
   },
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google"],
+    },
+  },
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
