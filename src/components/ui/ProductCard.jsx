@@ -1,13 +1,16 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const ProductCard = ({ product }) => {
   return (
     <div className="card w-full bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 animate__animated animate__fadeInUp animate__faster">
-      <figure className="h-64 overflow-hidden">
-        <img
+      <figure className="h-64 overflow-hidden relative w-full">
+        <Image
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
         />
       </figure>
       <div className="card-body">
